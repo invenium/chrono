@@ -19,6 +19,7 @@
 //! An `TimeZone` instance can be reconstructed from the corresponding `Offset` instance.
 
 use core::fmt;
+use abi_stable::StableAbi;
 
 use crate::format::{parse, ParseResult, Parsed, StrftimeItems};
 use crate::naive::{NaiveDate, NaiveDateTime, NaiveTime};
@@ -204,7 +205,7 @@ impl<T: fmt::Debug> LocalResult<T> {
 }
 
 /// The offset from the local time to UTC.
-pub trait Offset: Sized + Clone + fmt::Debug {
+pub trait Offset: Sized + Clone + fmt::Debug + StableAbi {
     /// Returns the fixed offset from UTC to the local time stored.
     fn fix(&self) -> FixedOffset;
 }
@@ -213,7 +214,7 @@ pub trait Offset: Sized + Clone + fmt::Debug {
 ///
 /// The methods here are the primarily constructors for [`Date`](../struct.Date.html) and
 /// [`DateTime`](../struct.DateTime.html) types.
-pub trait TimeZone: Sized + Clone {
+pub trait TimeZone: Sized + Clone + StableAbi {
     /// An associated offset type.
     /// This type is used to store the actual offset in date and time types.
     /// The original `TimeZone` value can be recovered via `TimeZone::from_offset`.

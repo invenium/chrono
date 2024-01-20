@@ -13,6 +13,7 @@ use core::fmt;
     ))
 ))]
 use std::time::{SystemTime, UNIX_EPOCH};
+use abi_stable::StableAbi;
 
 #[cfg(feature = "rkyv")]
 use rkyv::{Archive, Deserialize, Serialize};
@@ -40,7 +41,8 @@ use crate::{Date, DateTime};
 /// assert_eq!(Utc.timestamp_opt(61, 0).unwrap(), dt);
 /// assert_eq!(Utc.with_ymd_and_hms(1970, 1, 1, 0, 1, 1).unwrap(), dt);
 /// ```
-#[derive(Copy, Clone, PartialEq, Eq, Hash)]
+#[repr(C)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash, StableAbi)]
 #[cfg_attr(feature = "rkyv", derive(Archive, Deserialize, Serialize))]
 #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 pub struct Utc;

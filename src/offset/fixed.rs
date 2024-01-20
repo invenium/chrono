@@ -6,6 +6,7 @@
 use core::fmt;
 use core::ops::{Add, Sub};
 use core::str::FromStr;
+use abi_stable::StableAbi;
 
 #[cfg(feature = "rkyv")]
 use rkyv::{Archive, Deserialize, Serialize};
@@ -22,7 +23,8 @@ use crate::{DateTime, ParseError, Timelike};
 /// on a `FixedOffset` struct is the preferred way to construct
 /// `DateTime<FixedOffset>` instances. See the [`east_opt`](#method.east_opt) and
 /// [`west_opt`](#method.west_opt) methods for examples.
-#[derive(PartialEq, Eq, Hash, Copy, Clone)]
+#[repr(C)]
+#[derive(PartialEq, Eq, Hash, Copy, Clone, StableAbi)]
 #[cfg_attr(feature = "rkyv", derive(Archive, Deserialize, Serialize))]
 pub struct FixedOffset {
     local_minus_utc: i32,

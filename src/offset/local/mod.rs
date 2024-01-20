@@ -3,6 +3,7 @@
 
 //! The local (system) time zone.
 
+use abi_stable::StableAbi;
 #[cfg(feature = "rkyv")]
 use rkyv::{Archive, Deserialize, Serialize};
 
@@ -103,7 +104,8 @@ mod tz_info;
 /// let dt2: DateTime<Local> = Local.timestamp_opt(0, 0).unwrap();
 /// assert!(dt1 >= dt2);
 /// ```
-#[derive(Copy, Clone, Debug)]
+#[repr(C)]
+#[derive(Copy, Clone, Debug, StableAbi)]
 #[cfg_attr(feature = "rkyv", derive(Archive, Deserialize, Serialize))]
 #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 pub struct Local;
